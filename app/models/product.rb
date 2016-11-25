@@ -1,5 +1,5 @@
 class Product < ApplicationRecord
-  monetize :price_cents
+  monetize :price_cents, as: :price
 
   has_many :cart_items
   validates_presence_of :name, :quantity

@@ -4,7 +4,7 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.all
+    @products = Product.where("UPPER(name) LIKE :term OR UPPER(keywords) LIKE :term", term: "%#{params[:query].upcase}%")
   end
 
   # GET /products/1

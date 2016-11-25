@@ -1,0 +1,11 @@
+<tr>
+  <td><%= cart_item.product.name %></td>
+  <td><%= cart_item.product.price.format %></td>
+  <td>
+    <%= f.number_field :quantity, min: 1 %>
+  </td>
+  <td>
+    <%= f.hidden_field :_destroy, class: "destroy" %>
+    <a class="destroy-cart-item">x</a>
+  </td>
+</tr>

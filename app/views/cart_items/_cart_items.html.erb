@@ -1,0 +1,16 @@
+<table id="cart-items">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Price</th>
+      <th>Quantity</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%= f.fields_for(:cart_items) do |builder| %>
+      <%= render "cart_items/cart_item_row", cart_item: builder.object, f: builder %>
+    <% end %>
+  </tbody>
+</table>

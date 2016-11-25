@@ -16,6 +16,11 @@
     <%= f.text_field :owner %>
   </div>
 
+  <%= label_tag "product", "Add product" %>
+  <%= search_field_tag "product" %>
+
+  <%= render "cart_items/cart_items", cart_items: cart.cart_items, f: f %>
+
   <div class="actions">
     <%= f.submit %>
   </div>

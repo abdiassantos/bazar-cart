@@ -15,11 +15,48 @@
 //= require turbolinks
 //= require_tree .
 
-$(function() {
+$(document).on("turbolinks:load", function() {
+  $("#product_price").mask('#.##0.00', {reverse: true});
   $("#cart-owner").autocomplete({
     serviceUrl: "/carts/owners",
     onSelect: function(selected) {
       $(this.form).submit();
     }
   });
+
+  var parts = $(".edit_cart").attr("action").split("/");
+  var cartId = parts[parts.length - 1];
+  $("#product").autocomplete({
+    serviceUrl: "/products.json",
+    transformResult: function(result) {
+      result = JSON.parse(result);
+      return {
+        suggestions: result.map(product => ({ value: product.name, data: product }))
+      };
+    },
+    onSelect: function({ data: product }) {
+      $.post("/cart_items", {
+        cart_item: {
+          cart_id: cartId,
+          product_id: product.id,
+        }
+      }).then(res => {
+        $("#cart-items").replaceWith(res.html);
+        $(this).val("");
+        bindCartItems();
+      });
+    }
+  });
+
+  bindCartItems();
+
+  function bindCartItems() {
+    $("#cart-items .destroy-cart-item").click(function() {
+      if (confirm("Tem certeza que deseja deletar esse item?")) {
+        $(this)
+          .siblings("input.destroy").val(true)
+          .parents("tr").hide();
+      }
+    });
+  }
 })
