@@ -2,7 +2,8 @@
   <td><%= cart_item.product.name %></td>
   <td><%= cart_item.product.price.format %></td>
   <td>
-    <%= f.number_field :quantity, min: 1 %>
+    <% total = cart_item.product.remaining + cart_item.quantity %>
+    <%= f.number_field :quantity, min: 1, max: total %> / <%= total %>
   </td>
   <td>
     <%= f.hidden_field :_destroy, class: "destroy" %>

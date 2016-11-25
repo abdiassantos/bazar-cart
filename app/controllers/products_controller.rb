@@ -4,7 +4,14 @@ class ProductsController < ApplicationController
   # GET /products
   # GET /products.json
   def index
-    @products = Product.where("UPPER(name) LIKE :term OR UPPER(keywords) LIKE :term", term: "%#{params[:query].upcase}%")
+    @products = Product.all
+    if params[:query].present?
+      @products = @products.where("UPPER(name) LIKE :term OR UPPER(keywords) LIKE :term", term: "%#{params[:query].upcase}%")
+    end
+    respond_to do |format|
+      format.json { render json: @products }
+      format.html {}
+    end
   end
 
   # GET /products/1
