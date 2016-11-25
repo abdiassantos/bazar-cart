@@ -14,3 +14,12 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+$(function() {
+  $("#cart-owner").autocomplete({
+    serviceUrl: "/carts/owners",
+    onSelect: function(selected) {
+      $(this.form).submit();
+    }
+  });
+})
