@@ -6,7 +6,7 @@ class Product < ApplicationRecord
   validates_numericality_of :quantity, :price_cents, greater_than_or_equal_to: 0
 
   def remaining
-    quantity - cart_items.map(&:quantity).reduce(0) { |a, b| a + b }
+    quantity - cart_items.map(&:quantity).sum
   end
 
   def as_json(args = {})

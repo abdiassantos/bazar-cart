@@ -1,10 +1,11 @@
 <tr>
   <td><%= cart_item.product.name %></td>
-  <td><%= cart_item.product.price.format %></td>
+  <td data-product-price-cents="<%= cart_item.product.price_cents %>"><%= cart_item.product.price.format %></td>
   <td>
     <% total = cart_item.product.remaining + cart_item.quantity %>
-    <%= f.number_field :quantity, min: 1, max: total %> / <%= total %>
+    <%= f.number_field :quantity, min: 1, max: total, class: "quantity" %> / <%= total %>
   </td>
+  <td class="cart-item-price"><%= cart_item.price.format %></td>
   <td>
     <%= f.hidden_field :_destroy, class: "destroy" %>
     <a class="destroy-cart-item">x</a>

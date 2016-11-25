@@ -2,8 +2,9 @@
   <thead>
     <tr>
       <th>Name</th>
-      <th>Price</th>
+      <th>Individual price</th>
       <th>Quantity</th>
+      <th>Final price</th>
       <th></th>
     </tr>
   </thead>
@@ -12,5 +13,10 @@
     <%= f.fields_for(:cart_items) do |builder| %>
       <%= render "cart_items/cart_item_row", cart_item: builder.object, f: builder %>
     <% end %>
+
+    <tr>
+      <td colspan="3" style="text-align: right;">Total:</td>
+      <td class="cart-total"><%= f.object.total.format %></td>
+    </tr>
   </tbody>
 </table>

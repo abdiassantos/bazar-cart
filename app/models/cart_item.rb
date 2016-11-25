@@ -5,6 +5,10 @@ class CartItem < ApplicationRecord
 
   validate :has_stock
 
+  def price
+    product.price * quantity
+  end
+
   private
 
     def has_stock

@@ -67,8 +67,36 @@ $(document).on("turbolinks:load", function() {
       if (confirm("Tem certeza que deseja deletar esse item?")) {
         $(this)
           .siblings("input.destroy").val(true)
-          .parents("tr").hide();
+          .parents("tr").addClass("hidden");
+        calculatePrices();
       }
     });
+
+    $(".quantity").change(calculatePrices);
+
+    function calculateCartItemPriceCents(input) {
+      var quantity = parseInt(input.val());
+      var priceCents = input.parents("tr").find("[data-product-price-cents]").data("product-price-cents");
+
+      return quantity * priceCents;
+    }
+
+    function formatPrice(cents) {
+      return `R$${(cents / 100.0).toFixed(2)}`;
+    }
+
+    function calculatePrices() {
+      var total = 0;
+
+      $("#cart-items tr:not(.hidden) .quantity").each((_, input) => {
+        input = $(input);
+        var price = calculateCartItemPriceCents(input);
+        input.parents("tr").find(".cart-item-price").text(formatPrice(price));
+
+        total += price;
+      });
+
+      $("#cart-items .cart-total").text(formatPrice(total));
+    }
   }
 })
