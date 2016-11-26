@@ -73,6 +73,13 @@ $(document).on("turbolinks:load", function() {
     });
 
     $(".quantity").change(calculatePrices);
+    $("[name=paymentMethod], #installments").change(paymentMethodChanged);
+    paymentMethodChanged();
+
+    function paymentMethodChanged() {
+      $(".installments").toggle(paymentMethod() === "creditCard");
+      calculatePrices();
+    }
 
     function calculateCartItemPriceCents(input) {
       var quantity = parseInt(input.val());
@@ -96,7 +103,27 @@ $(document).on("turbolinks:load", function() {
         total += price;
       });
 
-      $("#cart-items .cart-total").text(formatPrice(total));
+      $("#cart-items .cart-total").text(formatPrice(taxes(total)));
+    }
+
+    function taxes(cents) {
+      switch (paymentMethod()) {
+        case "cash": return cents;
+        case "debitCard": return correctPrice(cents, 0.0249);
+        case "creditCard": return correctPrice(cents, 0.0419 + installments() * 0.0249);
+      }
+    }
+
+    function paymentMethod() {
+      return $("[name=paymentMethod]:checked").val();
+    }
+
+    function installments() {
+      return $("#installments").val();
+    }
+
+    function correctPrice(cents, taxes) {
+      return cents / (1 - taxes);
     }
   }
-})
+});
