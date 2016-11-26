@@ -10,6 +10,7 @@
   <thead>
     <tr>
       <th>Owner</th>
+      <th>Total</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -18,11 +19,17 @@
     <% @carts.each do |cart| %>
       <tr>
         <td><%= cart.owner %></td>
+        <td><%= cart.total.format %></td>
         <td><%= link_to 'Show', cart %></td>
         <td><%= link_to 'Edit', edit_cart_path(cart) %></td>
         <td><%= link_to 'Destroy', cart, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
+
+    <tr>
+      <td>Total:</td>
+      <td><%= @carts.map(&:total).sum.format %></td>
+    </tr>
   </tbody>
 </table>
 
