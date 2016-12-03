@@ -12,14 +12,15 @@
   <% end %>
 
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
-    <%= f.text_field :owner, class: "mdl-textfield__input" %>
-    <%= f.label :owner, "Dono", class: "mdl-textfield__label" %>
+    <%= f.text_field :owner, class: "mdl-textfield__input" %> <%= f.label :owner, "Dono", class: "mdl-textfield__label" %>
   </div>
 
   <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
     <%= search_field_tag "product", "", class: "mdl-textfield__input" %>
-    <%= label_tag "product", "Add product", class: "mdl-textfield__label" %>
+    <%= label_tag "product", "Adicionar produto ao carrinho", class: "mdl-textfield__label" %>
   </div>
+
+  <a class="mdl-button" id="add-product">Criar e adicionar produto</a>
 
   <%= render "cart_items/cart_items", cart_items: cart.cart_items, f: f %>
 
@@ -62,3 +63,7 @@
     <%= f.submit class: "mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--primary" %>
   </div>
 <% end %>
+
+<dialog class="mdl-dialog" id="create-product-dialog">
+  <%= render 'products/form', product: Product.new %>
+</dialog>

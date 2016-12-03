@@ -33,6 +33,7 @@ $(document).on("turbolinks:load", function() {
     var parts = cartForm.attr("action").split("/");
     var cartId = parts[parts.length - 1];
   }
+
   $("#product").autocomplete({
     serviceUrl: "/products.json",
     transformResult: function(result) {
@@ -44,26 +45,11 @@ $(document).on("turbolinks:load", function() {
         }))
       };
     },
-    onSelect: function({ data: product }) {
-      $.post("/cart_items", {
-        cart_item: {
-          cart_id: cartId,
-          product_id: product.id,
-        }
-      }).then(res => {
-          $("#cart-items").replaceWith(res.html);
-          $(this).val("");
-          bindCartItems();
-        },
-        error => {
-          $(this).val("");
-          alert(error.responseText);
-        }
-      );
-    }
+    onSelect: addProductToCart
   });
 
   bindCartItems();
+  createProductInline();
 
   function bindCartItems() {
     $("#cart-items .destroy-cart-item").click(function() {
@@ -128,5 +114,46 @@ $(document).on("turbolinks:load", function() {
     function correctPrice(cents, taxes) {
       return cents / (1 - taxes);
     }
+  }
+
+  function addProductToCart({ data: product }) {
+    $.post("/cart_items", {
+      cart_item: {
+        cart_id: cartId,
+        product_id: product.id,
+      }
+    }).then(res => {
+        $("#cart-items").replaceWith(res.html);
+        $(this).val("");
+        bindCartItems();
+      },
+      error => {
+        $(this).val("");
+        alert(error.responseText);
+      }
+    );
+  }
+
+  function createProductInline() {
+    var $dialog = $('#create-product-dialog');
+    var dialog = $dialog[0];
+
+    if (!dialog.showModal) {
+      dialogPolyfill.registerDialog(dialog);
+    }
+
+    $('#add-product').click(() => dialog.showModal());
+    $dialog.find('#new_product').submit(event => {
+      event.preventDefault();
+      $.ajax({
+        url: "/products.json",
+        type: "POST",
+        data: $(event.target).serialize(),
+        success: product => {
+          addProductToCart({ data: product });
+          dialog.close();
+        }
+      });
+    });
   }
 });
