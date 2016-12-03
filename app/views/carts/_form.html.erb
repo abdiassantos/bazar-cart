@@ -11,30 +11,32 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :owner %>
-    <%= f.text_field :owner %>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= f.text_field :owner, class: "mdl-textfield__input" %>
+    <%= f.label :owner, "Dono", class: "mdl-textfield__label" %>
   </div>
 
-  <%= label_tag "product", "Add product" %>
-  <%= search_field_tag "product" %>
+  <div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+    <%= search_field_tag "product", "", class: "mdl-textfield__input" %>
+    <%= label_tag "product", "Add product", class: "mdl-textfield__label" %>
+  </div>
 
   <%= render "cart_items/cart_items", cart_items: cart.cart_items, f: f %>
 
   <div>
-    <label>
-      <input type="radio" name="paymentMethod" value="cash" checked>
-      Dinheiro
+    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="cash">
+      <input id="cash" class="mdl-radio__button" type="radio" name="paymentMethod" value="cash" checked>
+      <span class="mdl-radio__label">Dinheiro</span>
     </label>
 
-    <label>
-      <input type="radio" name="paymentMethod" value="debitCard">
-      Débito
+    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="debit-card">
+      <input id="debit-card" class="mdl-radio__button" type="radio" name="paymentMethod" value="debitCard">
+      <span class="mdl-radio__label">Débito</span>
     </label>
 
-    <label>
-      <input type="radio" name="paymentMethod" value="creditCard">
-      Crédito
+    <label class="mdl-radio mdl-js-radio mdl-js-ripple-effect" for="credit-card">
+      <input id="credit-card" class="mdl-radio__button" type="radio" name="paymentMethod" value="creditCard">
+      <span class="mdl-radio__label">Crédito</span>
     </label>
 
     <div class="installments">
@@ -57,6 +59,6 @@
   </div>
 
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "mdl-button mdl-button--raised mdl-js-button mdl-js-ripple-effect mdl-button--primary" %>
   </div>
 <% end %>

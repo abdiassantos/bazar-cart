@@ -8,6 +8,8 @@
   <td class="cart-item-price"><%= cart_item.price.format %></td>
   <td>
     <%= f.hidden_field :_destroy, class: "destroy" %>
-    <a class="destroy-cart-item">x</a>
+    <a class="destroy-cart-item mdl-button mdl-js-button mdl-button--icon mdl-button--colored mdl-button--accent">
+      <i class="material-icons">close</i>
+    </a>
   </td>
 </tr>

@@ -13,9 +13,12 @@
 //= require jquery
 //= require jquery_ujs
 //= require turbolinks
+//= require material
 //= require_tree .
 
 $(document).on("turbolinks:load", function() {
+  componentHandler.upgradeDom();
+
   $("#product_price").mask('#.##0.00', {reverse: true});
   $("#cart-owner").autocomplete({
     serviceUrl: "/carts/owners",
