@@ -136,6 +136,8 @@ $(document).on("turbolinks:load", function() {
 
   function createProductInline() {
     var $dialog = $('#create-product-dialog');
+
+    if (!$dialog.length) { return; }
     var dialog = $dialog[0];
 
     if (!dialog.showModal) {
@@ -143,15 +145,18 @@ $(document).on("turbolinks:load", function() {
     }
 
     $('#add-product').click(() => dialog.showModal());
-    $dialog.find('#new_product').submit(event => {
+    var form = $dialog.find('#new_product');
+    form.submit(event => {
       event.preventDefault();
       $.ajax({
         url: "/products.json",
         type: "POST",
-        data: $(event.target).serialize(),
+        data: form.serialize(),
         success: product => {
           addProductToCart({ data: product });
           dialog.close();
+          form[0].reset();
+          form.find('input[type=submit]').prop('disabled', false);
         }
       });
     });

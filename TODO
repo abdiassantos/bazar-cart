@@ -1,0 +1,6 @@
+- Resetar add product form após envio ajax
+- Salvar dados do cliente (email, telefone, facebook)
+- Salvar modo de pagamento
+- Checkbox para dizer se o cliente pagou ou não
+- Editar preço do produto-carrinho (desconto pro cliente)
+- Menu

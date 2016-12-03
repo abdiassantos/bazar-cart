@@ -31,7 +31,7 @@
 
     <tr>
       <td>Total:</td>
-      <td><%= @carts.map(&:total).sum.format %></td>
+      <td><%= @carts.map(&:total).sum.to_money.format %></td>
       <td colspan="3"></td>
     </tr>
   </tbody>
