@@ -22,6 +22,7 @@ $(document).on("turbolinks:load", function() {
   $("#product_price").mask('#.##0.00', {reverse: true});
   $("#cart-owner").autocomplete({
     serviceUrl: "/carts/owners",
+    triggerSelectOnValidInput: false,
     onSelect: function(selected) {
       $(this.form).submit();
     }

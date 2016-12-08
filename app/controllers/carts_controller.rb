@@ -5,6 +5,12 @@ class CartsController < ApplicationController
   # GET /carts.json
   def index
     @carts = Cart.all
+
+    if params[:picked_up].present?
+      @carts = @carts.includes(:cart_items).where(
+        cart_items: { picked_up: params[:picked_up] }
+      )
+    end
   end
 
   # GET /carts/1

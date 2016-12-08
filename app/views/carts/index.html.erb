@@ -9,6 +9,16 @@
   </div>
 <% end %>
 
+<%= form_tag carts_path, method: :get do %>
+  <select name="picked_up">
+    <option value="true">Tem items já levados</option>
+    <option value="false">Tem items não levados</option>
+    <option value="">Indiferente</option>
+  </select>
+
+  <button class="mdl-button">Filtrar</button>
+<% end %>
+
 <table class="mdl-data-table">
   <thead>
     <tr>

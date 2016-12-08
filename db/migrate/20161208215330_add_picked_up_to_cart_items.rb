@@ -1,5 +1,5 @@
 class AddPickedUpToCartItems < ActiveRecord::Migration[5.0]
   def change
-    add_column :cart_items, :picked_up, :boolean
+    add_column :cart_items, :picked_up, :boolean, default: false
   end
 end
