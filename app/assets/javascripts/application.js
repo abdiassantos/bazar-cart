@@ -151,6 +151,7 @@ $(document).on("turbolinks:load", function() {
       cart_item: {
         cart_id: cartId,
         product_id: product.id,
+        quantity: product.quantity,
       }
     }).then(res => {
         $("#cart-items").replaceWith(res.html);
