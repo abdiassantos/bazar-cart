@@ -15,11 +15,13 @@ class CartItem < ApplicationRecord
       before, after = changes[:quantity]
       difference = if before
                      after - before
-                   else
+                   elsif after
                      quantity
+                   else
+                     0
                    end
       if product.remaining - difference < 0
-        errors.add(:quantity, "Não há items o suficiente")
+        errors.add(:quantity, "Não há quantidade o suficiente para #{product.name}")
       end
     end
 end
