@@ -62,11 +62,12 @@ $(document).on("turbolinks:load", function() {
     });
 
     $(".quantity").change(calculatePrices);
-    $("[name=paymentMethod], #installments").change(paymentMethodChanged);
+    $("[name=paymentMethod], #installments, [name=provider]").change(paymentMethodChanged);
     paymentMethodChanged();
 
     function paymentMethodChanged() {
       $(".installments").toggle(paymentMethod() === "creditCard");
+      $(".credit-card-provider").toggle(paymentMethod() === "creditCard");
       calculatePrices();
     }
 
@@ -99,12 +100,40 @@ $(document).on("turbolinks:load", function() {
       switch (paymentMethod()) {
         case "cash": return cents;
         case "debitCard": return correctPrice(cents, 0.0249);
-        case "creditCard": return correctPrice(cents, 0.0419 + installments() * 0.0249);
+        case "creditCard": return correctPrice(cents, creditCardRate());
       }
     }
 
     function paymentMethod() {
       return $("[name=paymentMethod]:checked").val();
+    }
+
+    function creditCardRate() {
+      var provider = $('[name=provider]:checked').val();
+      switch (provider) {
+        case "payleven":
+          return 0.0419 + installments() * 0.0249;
+        case "picpay":
+          return picpayRate();
+        default: throw new Error("Unrecognized credit card provider: " + provider);
+      }
+    }
+
+    function picpayRate() {
+      switch (installments()) {
+        case "0": return 4.89 / 100;
+        case "1": return 5.49 / 100;
+        case "2": return 6.99 / 100;
+        case "3": return 7.99 / 100;
+        case "4": return 9.49 / 100;
+        case "5": return 10.99 / 100;
+        case "6": return 11.98 / 100;
+        case "7": return 12.98 / 100;
+        case "8": return 14.49 / 100;
+        case "9": return 15.49 / 100;
+        case "10": return 16.29 / 100;
+        case "11": return 16.98 / 100;
+      }
     }
 
     function installments() {
