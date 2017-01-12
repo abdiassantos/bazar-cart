@@ -25,6 +25,7 @@ MoneyRails.configure do |config|
 
   # Default ActiveRecord migration configuration values for columns:
   #
+  config.amount_column[:postfix] = '_cents'
   # config.amount_column = { prefix: '',           # column name prefix
   #                          postfix: '_cents',    # column name  postfix
   #                          column_name: nil,     # full column name (overrides prefix, postfix and accessor name)

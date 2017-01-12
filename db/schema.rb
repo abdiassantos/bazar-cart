@@ -12,9 +12,6 @@
 
 ActiveRecord::Schema.define(version: 20161208215330) do
 
-  # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
-
   create_table "cart_items", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "cart_id"
@@ -22,15 +19,15 @@ ActiveRecord::Schema.define(version: 20161208215330) do
     t.datetime "updated_at",                 null: false
     t.integer  "quantity",   default: 1
     t.boolean  "picked_up",  default: false
-    t.index ["cart_id"], name: "index_cart_items_on_cart_id", using: :btree
-    t.index ["product_id"], name: "index_cart_items_on_product_id", using: :btree
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["product_id"], name: "index_cart_items_on_product_id"
   end
 
   create_table "carts", force: :cascade do |t|
     t.string   "owner"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["owner"], name: "index_carts_on_owner", unique: true, using: :btree
+    t.index ["owner"], name: "index_carts_on_owner", unique: true
   end
 
   create_table "products", force: :cascade do |t|
@@ -43,6 +40,4 @@ ActiveRecord::Schema.define(version: 20161208215330) do
     t.datetime "updated_at",                     null: false
   end
 
-  add_foreign_key "cart_items", "carts"
-  add_foreign_key "cart_items", "products"
 end
